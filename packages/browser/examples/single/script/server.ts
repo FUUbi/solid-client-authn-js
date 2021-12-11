@@ -9,6 +9,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./index.html"));
 });
 
+app.get("/B", (req, res) => {
+  res.sendFile(path.join(__dirname, "./B.html"));
+});
+
+app.get("/C", (req, res) => {
+  res.sendFile(path.join(__dirname, "./C.html"));
+});
+
 app.get("/solid-client-authn.bundle.js", (req, res) => {
   res.sendFile(
     path.join(__dirname, "../../../dist/solid-client-authn.bundle.js")

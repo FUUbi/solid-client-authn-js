@@ -1,0 +1,62 @@
+<!-- This file is a work in progress. It should be fixed -->
+<html>
+  <body>
+    <h1>Page B</h1>
+    <p>
+      Go to
+      <a  href="http://localhost:3001/"
+        >Page A</a
+      >
+    </p>
+    <p>
+      Go to
+      <a  href="http://localhost:3001/B"
+        >Page B</a
+      >
+    </p>
+    <p>
+      Go to
+      <a  href="http://localhost:3001/C"
+      >Page C</a
+      >
+    </p>
+    <h1>solid-client-authn Script Tag Tester</h1>
+
+
+    <p>
+      Logging in to
+      <a id="oidcIssuer" href="https://inrupt.net"
+        >https://inrupt.net</a
+      >
+    </p>
+    <div>
+      WebID of the user you just logged in as:
+      <strong><span id="WebId"></span></strong>
+    </div>
+
+    <script type="text/javascript" src="/solid-client-authn.bundle.js"></script>
+    <script>
+      const session = new solidClientAuthentication.Session();
+      // When loading the page, check if you are being redirected from the IdP
+      session
+        .handleIncomingRedirect(
+                {
+                  url:window.location.href,
+                  restorePreviousSession: true
+                }
+)
+        .then((sessionInfo) => {
+          if(!sessionInfo.isLoggedIn) {
+            // If you are not logged in, initiate the login
+            session.login({
+              redirectUrl: window.location.href,
+              oidcIssuer: document.getElementById("oidcIssuer").innerHTML,
+            });
+          } else {
+            // The page was loaded after a redirect from the IdP
+            document.getElementById("WebId").innerHTML = sessionInfo.webId;
+          }
+        });
+    </script>
+  </body>
+</html>
